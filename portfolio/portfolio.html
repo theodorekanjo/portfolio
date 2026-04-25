@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Theodore Kanjo — AI Automation Consultant</title>
+<meta name="description" content="I build AI systems that turn manual bottlenecks into automated revenue. Book a free 30-min strategy call.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a08;--surface:#111110;--card:#161614;--card-2:#1c1c19;
+  --border:#2a2a26;--border-2:#3a3a34;
+  --accent:#c8f060;--accent-d:#a8d040;--accent2:#f0a840;
+  --text:#e8e8e0;--muted:#8a8a80;--muted-2:#6a6a60;--light:#f5f5ef;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease-in-out:cubic-bezier(.65,0,.35,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;font-size:14px;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%;}
+a{color:inherit;}
+
+/* SVG ICONS — minimal line */
+.icon{width:18px;height:18px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.icon-lg{width:22px;height:22px;}
+
+/* CURSOR (desktop only) */
+.cursor,.cursor-ring{display:none;}
+@media(hover:hover) and (pointer:fine){
+  .cursor{display:block;width:6px;height:6px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .2s var(--ease);mix-blend-mode:difference;}
+  .cursor-ring{display:block;width:34px;height:34px;border:1px solid rgba(200,240,96,0.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .3s var(--ease),width .3s var(--ease),height .3s var(--ease);}
+  .cursor-ring.hover{width:56px;height:56px;border-color:rgba(200,240,96,.8);}
+}
+
+/* SCROLL PROGRESS */
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:200;transition:width .08s linear;will-change:width;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 4rem;background:rgba(10,10,8,0.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,0.04);transition:padding .3s var(--ease),background .3s var(--ease);}
+nav.scrolled{padding:.8rem 4rem;background:rgba(10,10,8,0.92);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;letter-spacing:.06em;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:.5rem;}
+.nav-logo-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:0 0 10px var(--accent);animation:livepulse 2s ease infinite;}
+@keyframes livepulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;transition:color .2s;position:relative;}
+.nav-links a:not(.nav-cta)::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s var(--ease);}
+.nav-links a:not(.nav-cta):hover{color:var(--text);}
+.nav-links a:not(.nav-cta):hover::after{width:100%;}
+.nav-cta{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1.1rem;background:var(--accent);color:var(--bg) !important;border-radius:999px;font-weight:400;transition:all .25s var(--ease) !important;letter-spacing:.08em !important;}
+.nav-cta:hover{background:#d8ff72;transform:translateY(-1px);box-shadow:0 8px 24px rgba(200,240,96,.25);}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;}
+.nav-burger span{display:block;width:22px;height:1.5px;background:var(--text);transition:all .3s var(--ease);}
+.nav-burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;}
+.nav-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:99;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:5rem 2rem;gap:1.6rem;pointer-events:none;opacity:0;transform:translateY(-20px);transition:all .4s var(--ease);}
+.mobile-menu.open{pointer-events:auto;opacity:1;transform:translateY(0);}
+.mobile-menu a{color:var(--text);text-decoration:none;font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-.02em;transition:color .2s;display:flex;align-items:center;gap:1rem;}
+.mobile-menu a .idx{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--muted-2);}
+.mobile-menu a:hover,.mobile-menu a:active{color:var(--accent);}
+.mobile-menu .mm-cta{margin-top:1.5rem;padding:.9rem 1.6rem;background:var(--accent);color:var(--bg);border-radius:999px;font-family:'DM Mono',monospace;font-size:.78rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;}
+.mobile-menu .mm-foot{margin-top:auto;font-size:.7rem;color:var(--muted-2);}
+.mobile-menu .mm-foot span{color:var(--accent);}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.55rem;padding:.85rem 1.5rem;font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:999px;cursor:pointer;transition:all .3s var(--ease);position:relative;overflow:hidden;border:none;white-space:nowrap;}
+.btn-primary{background:var(--accent);color:var(--bg);box-shadow:0 1px 2px rgba(200,240,96,.2),0 8px 24px rgba(200,240,96,.18),inset 0 1px 0 rgba(255,255,255,.3);}
+.btn-primary:hover{background:#d8ff72;transform:translateY(-2px);box-shadow:0 1px 2px rgba(200,240,96,.3),0 16px 36px rgba(200,240,96,.28),inset 0 1px 0 rgba(255,255,255,.4);}
+.btn-primary .icon{stroke:var(--bg);}
+.btn-ghost{border:1px solid var(--border-2);color:var(--text);background:rgba(255,255,255,.02);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);background:rgba(200,240,96,.04);}
+.btn-lg{padding:1.05rem 1.9rem;font-size:.78rem;}
+
+/* SHINE on primary */
+.btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transition:left .6s var(--ease);}
+.btn-primary:hover::before{left:100%;}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1.15fr 1fr;align-items:center;padding:7.5rem 4rem 5rem;position:relative;overflow:hidden;gap:4rem;}
+.hero-bg{position:absolute;inset:0;background-image:url('assets/hero-bg.jpeg');background-size:cover;background-position:center;opacity:.18;pointer-events:none;filter:saturate(.85);will-change:transform;}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,8,.6) 0%,rgba(10,10,8,.85) 70%,var(--bg) 100%),radial-gradient(ellipse at 70% 30%,transparent 0%,rgba(10,10,8,.7) 70%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;mask-image:radial-gradient(ellipse at 50% 40%,black 40%,transparent 80%);}
+.hero-glow{position:absolute;top:-150px;right:-100px;width:700px;height:700px;background:radial-gradient(circle,rgba(200,240,96,0.065) 0%,transparent 65%);pointer-events:none;will-change:transform;}
+.hero-glow-2{position:absolute;bottom:-200px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(240,168,64,0.035) 0%,transparent 65%);pointer-events:none;}
+.hero-left{position:relative;z-index:2;}
+.hero-tag{display:inline-flex;align-items:center;gap:.55rem;background:rgba(200,240,96,0.07);border:1px solid rgba(200,240,96,0.2);color:var(--accent);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;padding:.4rem .9rem;border-radius:999px;margin-bottom:2rem;}
+.hero-tag .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);animation:livepulse 2s ease infinite;}
+
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.6rem,5vw,4.8rem);font-weight:800;line-height:1.02;letter-spacing:-.028em;margin-bottom:1.4rem;}
+h1 em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent);font-weight:400;}
+h1 .word{display:inline-block;overflow:hidden;padding-bottom:.05em;}
+h1 .word span{display:inline-block;transform:translateY(110%);transition:transform .9s var(--ease);will-change:transform;}
+h1 .word span.in{transform:translateY(0);}
+
+.hero-sub{font-size:.88rem;color:var(--muted);max-width:440px;line-height:1.85;margin-bottom:2rem;opacity:0;transform:translateY(14px);transition:all .8s var(--ease) .5s;}
+.hero-sub.in{opacity:1;transform:translateY(0);}
+.hero-sub strong{color:var(--text);font-weight:400;}
+
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;transform:translateY(14px);transition:all .8s var(--ease) .6s;}
+.hero-actions.in{opacity:1;transform:translateY(0);}
+
+.hero-trust{display:flex;gap:1.6rem;margin-top:2.2rem;padding-top:1.6rem;border-top:1px solid var(--border);flex-wrap:wrap;opacity:0;transform:translateY(14px);transition:all .8s var(--ease) .75s;}
+.hero-trust.in{opacity:1;transform:translateY(0);}
+.trust-item{display:flex;flex-direction:column;gap:.2rem;}
+.trust-num{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--light);line-height:1;}
+.trust-num span{color:var(--accent);}
+.trust-label{font-size:.62rem;color:var(--muted-2);letter-spacing:.08em;text-transform:uppercase;}
+
+/* HERO RIGHT (visual) */
+.hero-right{position:relative;z-index:2;opacity:0;transform:translateY(20px) scale(.98);transition:all 1s var(--ease) .4s;}
+.hero-right.in{opacity:1;transform:translateY(0) scale(1);}
+.hero-photo-wrap{position:relative;width:100%;max-width:440px;margin-left:auto;}
+.hero-photo-frame{position:relative;border-radius:4px;overflow:hidden;border:1px solid var(--border);aspect-ratio:4/5;background:var(--card);}
+.hero-photo{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform 1.2s var(--ease);}
+.hero-right:hover .hero-photo{transform:scale(1.04);}
+.hero-photo-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,10,8,.55) 100%);pointer-events:none;}
+.photo-meta{position:absolute;left:1.2rem;right:1.2rem;bottom:1.2rem;display:flex;justify-content:space-between;align-items:flex-end;color:var(--light);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;z-index:2;}
+.photo-meta .live{display:flex;align-items:center;gap:.45rem;color:var(--accent);}
+.photo-meta .live .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:livepulse 2s ease infinite;}
+
+.photo-badge{position:absolute;bottom:-1.2rem;left:-1.2rem;background:var(--accent);color:var(--bg);padding:1rem 1.2rem;font-family:'Syne',sans-serif;font-size:.72rem;font-weight:800;line-height:1.4;border-radius:3px;z-index:3;transform:rotate(-2deg);transition:transform .4s var(--ease);}
+.hero-right:hover .photo-badge{transform:rotate(0deg) translateY(-2px);}
+
+.photo-stat{position:absolute;top:1.2rem;right:-1.2rem;background:var(--card);border:1px solid var(--border);padding:.7rem 1rem;border-radius:3px;z-index:3;min-width:130px;}
+.stat-pill-num{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--accent);line-height:1;display:flex;align-items:baseline;gap:.15rem;}
+.stat-pill-num span{font-size:.7rem;}
+.stat-pill-label{font-size:.58rem;color:var(--muted);letter-spacing:.06em;margin-top:.2rem;text-transform:uppercase;}
+
+/* SCROLL HINT */
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:.5;}
+.scroll-hint span{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);}
+.scroll-arrow{width:1px;height:36px;background:linear-gradient(to bottom,var(--muted-2),transparent);animation:scrollDown 2s ease infinite;}
+@keyframes scrollDown{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform:scaleY(1);transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+/* TICKER */
+.ticker{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.9rem 0;overflow:hidden;white-space:nowrap;position:relative;}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--surface),transparent);}
+.ticker::after{right:0;background:linear-gradient(-90deg,var(--surface),transparent);}
+.ticker-inner{display:inline-flex;animation:ticker 40s linear infinite;}
+.ticker:hover .ticker-inner{animation-play-state:paused;}
+.ticker-item{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:0 2rem;display:inline-flex;align-items:center;gap:1rem;}
+.ticker-item .sep{color:var(--accent);font-size:.6rem;}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:6rem 4rem;position:relative;}
+.section-label{display:inline-flex;align-items:center;gap:.55rem;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+.section-label::before{content:'';width:18px;height:1px;background:var(--accent);}
+h2{font-family:'Syne',sans-serif;font-size:clamp(2rem,3.4vw,3.2rem);font-weight:800;line-height:1.05;letter-spacing:-.025em;margin-bottom:1rem;}
+h2 em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent);font-weight:400;}
+.section-intro{color:var(--muted);max-width:560px;line-height:1.85;margin-bottom:3rem;font-size:.86rem;}
+
+/* VALUE / OUTCOMES */
+.value-section{background:linear-gradient(180deg,var(--bg) 0%,var(--surface) 100%);}
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.value-item{padding:2.4rem 2rem;border-right:1px solid var(--border);position:relative;transition:background .3s var(--ease);}
+.value-item:last-child{border-right:none;}
+.value-item:hover{background:rgba(200,240,96,.025);}
+.value-item .vi-icon{width:36px;height:36px;border:1px solid var(--border-2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;color:var(--accent);transition:all .3s var(--ease);}
+.value-item:hover .vi-icon{border-color:var(--accent);transform:rotate(8deg);}
+.value-item h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.6rem;color:var(--light);}
+.value-item p{font-size:.8rem;color:var(--muted);line-height:1.8;}
+
+/* SYSTEMS */
+.systems-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.3rem;}
+.system-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1.8rem;position:relative;transition:all .35s var(--ease);overflow:hidden;cursor:default;}
+.system-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .3s;}
+.system-card:hover{border-color:rgba(200,240,96,.3);transform:translateY(-3px);background:var(--card-2);}
+.system-card:hover::before{opacity:1;}
+.sys-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem;}
+.sys-num{font-size:.6rem;letter-spacing:.22em;color:var(--muted-2);}
+.sys-icon-wrap{width:32px;height:32px;border:1px solid var(--border-2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);transition:all .3s var(--ease);}
+.system-card:hover .sys-icon-wrap{border-color:var(--accent);background:rgba(200,240,96,.05);}
+.sys-title{font-family:'Syne',sans-serif;font-size:.98rem;font-weight:700;margin-bottom:.7rem;color:var(--light);line-height:1.3;}
+.sys-desc{font-size:.78rem;color:var(--muted);line-height:1.75;margin-bottom:1.2rem;}
+.sys-result{background:rgba(200,240,96,.05);border-left:2px solid var(--accent);padding:.5rem .8rem;margin-bottom:1rem;font-size:.72rem;color:var(--light);border-radius:0 2px 2px 0;}
+.sys-result span{color:var(--accent);font-weight:400;}
+.sys-tools{display:flex;flex-wrap:wrap;gap:.35rem;}
+.tool-tag{background:rgba(200,240,96,.06);border:1px solid rgba(200,240,96,.14);color:var(--accent);font-size:.6rem;padding:.25rem .55rem;border-radius:2px;letter-spacing:.06em;}
+
+/* CTA BANNER — reusable */
+.cta-banner{margin:5rem 4rem;padding:3.5rem 3rem;background:linear-gradient(135deg,var(--card) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:6px;display:grid;grid-template-columns:1.4fr 1fr;gap:3rem;align-items:center;position:relative;overflow:hidden;}
+.cta-banner::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(200,240,96,.08),transparent 70%);}
+.cta-banner h3{font-family:'Syne',sans-serif;font-size:clamp(1.5rem,2.4vw,2.1rem);font-weight:800;line-height:1.1;margin-bottom:.8rem;letter-spacing:-.02em;}
+.cta-banner h3 em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent);font-weight:400;}
+.cta-banner p{color:var(--muted);font-size:.82rem;line-height:1.8;}
+.cta-banner-right{display:flex;flex-direction:column;gap:1rem;position:relative;z-index:2;}
+.cta-mini-list{font-size:.72rem;color:var(--muted);line-height:2;}
+.cta-mini-list .check{color:var(--accent);margin-right:.5rem;}
+
+/* VENTURES */
+.ventures{background:var(--surface);}
+.ventures-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;}
+.venture-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2.2rem;transition:all .35s var(--ease);position:relative;overflow:hidden;}
+.venture-card:hover{border-color:rgba(200,240,96,.28);transform:translateY(-3px);}
+.venture-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+.venture-badge{display:inline-block;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:.25rem .6rem;border-radius:999px;margin-bottom:1.2rem;}
+.badge-founder{background:rgba(200,240,96,.09);color:var(--accent);border:1px solid rgba(200,240,96,.18);}
+.badge-cofound{background:rgba(240,168,64,.09);color:var(--accent2);border:1px solid rgba(240,168,64,.18);}
+.venture-name{font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:800;margin-bottom:.3rem;letter-spacing:-.02em;}
+.venture-sub{font-size:.7rem;color:var(--muted-2);margin-bottom:1.2rem;letter-spacing:.05em;text-transform:uppercase;}
+.venture-desc{font-size:.82rem;color:var(--muted);line-height:1.85;margin-bottom:1.3rem;}
+.venture-list{list-style:none;margin-bottom:1.5rem;}
+.venture-list li{font-size:.76rem;color:var(--text);padding:.55rem 0;border-top:1px solid var(--border);display:flex;gap:.7rem;align-items:flex-start;}
+.venture-list li .arrow{color:var(--accent);flex-shrink:0;margin-top:.2rem;}
+
+/* NUMBERS */
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.5rem;}
+.number-card{border-top:2px solid var(--border);padding:1.4rem 0;transition:all .3s var(--ease);position:relative;cursor:default;}
+.number-card::before{content:'';position:absolute;top:-2px;left:0;width:0;height:2px;background:var(--accent);transition:width .5s var(--ease);}
+.number-card:hover::before{width:100%;}
+.big-num{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,3.6vw,3rem);font-weight:800;color:var(--light);line-height:1;margin-bottom:.45rem;letter-spacing:-.02em;}
+.big-num span{color:var(--accent);}
+.num-label{font-size:.72rem;color:var(--muted);line-height:1.5;}
+
+/* PROCESS */
+.process-section{background:var(--bg);}
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:2rem;position:relative;}
+.process-grid::before{content:'';position:absolute;top:2.6rem;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,var(--border-2),transparent);z-index:1;}
+.process-step{padding:0 1.5rem;position:relative;z-index:2;}
+.process-num{width:5.2rem;height:5.2rem;border-radius:50%;background:var(--bg);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent);margin-bottom:1.5rem;transition:all .4s var(--ease);}
+.process-step:hover .process-num{border-color:var(--accent);transform:scale(1.05);box-shadow:0 0 0 8px rgba(200,240,96,.06);}
+.process-step h3{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:.6rem;color:var(--light);}
+.process-step p{font-size:.8rem;color:var(--muted);line-height:1.8;margin-bottom:.8rem;}
+.process-step .ps-meta{font-size:.64rem;color:var(--muted-2);letter-spacing:.14em;text-transform:uppercase;}
+
+/* TESTIMONIAL */
+.testi-section{background:var(--surface);padding:7rem 4rem;}
+.testi-head{max-width:900px;margin:0 auto 3.5rem;text-align:center;}
+.testi-card{max-width:900px;margin:0 auto;text-align:center;position:relative;}
+.testi-quote{font-family:'Syne',sans-serif;font-size:clamp(1.4rem,2.6vw,2.2rem);font-weight:400;line-height:1.35;color:var(--light);letter-spacing:-.02em;margin-bottom:2rem;}
+
+/* WORKFLOW GALLERY */
+.wf-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;margin-top:3rem;max-width:1280px;margin-left:auto;margin-right:auto;}
+.wf-gallery .wf-feature{grid-column:1/-1;}
+.wf-card{background:var(--card);border:1px solid var(--border);border-radius:5px;overflow:hidden;transition:all .35s var(--ease);position:relative;}
+.wf-card:hover{border-color:rgba(200,240,96,.3);transform:translateY(-3px);}
+.wf-img-wrap{position:relative;background:#0a0a08;aspect-ratio:14/10;overflow:hidden;}
+.wf-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .8s var(--ease);}
+.wf-card:hover .wf-img{transform:scale(1.03);}
+.wf-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(10,10,8,.6) 100%);pointer-events:none;}
+.wf-meta{padding:1.2rem 1.4rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
+.wf-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--light);margin-bottom:.3rem;line-height:1.3;}
+.wf-client{font-size:.66rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;}
+.wf-result{font-size:.7rem;color:var(--muted);text-align:right;flex-shrink:0;font-family:'Instrument Serif',serif;font-style:italic;font-size:.95rem;color:var(--light);}
+.wf-result span{color:var(--accent);}
+@media(max-width:900px){
+  .wf-gallery{grid-template-columns:1fr;gap:1rem;}
+  .wf-meta{flex-direction:column;gap:.6rem;}
+  .wf-result{text-align:left;}
+}
+.testi-quote em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent);}
+.testi-meta{display:inline-flex;align-items:center;gap:.9rem;font-size:.75rem;color:var(--muted);}
+.testi-meta .ta-name{color:var(--text);font-family:'Syne',sans-serif;font-weight:700;}
+.testi-avatar{width:38px;height:38px;border-radius:50%;background:var(--accent);color:var(--bg);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.85rem;}
+.testi-quote-mark{font-family:'Instrument Serif',serif;font-size:6rem;line-height:.5;color:var(--accent);opacity:.3;margin-bottom:1.2rem;}
+
+/* TIMELINE */
+.timeline-list{position:relative;padding-left:2rem;margin-top:1rem;}
+.timeline-list::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--border);}
+.tl-item{position:relative;padding:1.6rem 0 1.6rem 2rem;border-bottom:1px solid rgba(255,255,255,0.03);transition:padding-left .3s var(--ease);}
+.tl-item::before{content:'';position:absolute;left:-2rem;top:2.1rem;width:8px;height:8px;background:var(--bg);border:1px solid var(--border-2);border-radius:50%;transform:translateX(50%);transition:all .3s var(--ease);}
+.tl-item:hover{padding-left:2.4rem;}
+.tl-item:hover::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 5px rgba(200,240,96,.1);}
+.tl-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.4rem;}
+.tl-role{font-family:'Syne',sans-serif;font-size:.96rem;font-weight:700;color:var(--light);}
+.tl-date{font-size:.62rem;color:var(--muted-2);letter-spacing:.08em;padding-top:.25rem;text-transform:uppercase;}
+.tl-org{font-size:.72rem;color:var(--accent);margin-bottom:.7rem;}
+.tl-bullets{list-style:none;}
+.tl-bullets li{font-size:.76rem;color:var(--muted);padding:.22rem 0;display:flex;gap:.7rem;}
+.tl-bullets li::before{content:'—';color:var(--border-2);flex-shrink:0;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:5rem;align-items:start;}
+.about-photo-wrap{position:relative;}
+.about-photo-frame{position:relative;border-radius:4px;overflow:hidden;border:1px solid var(--border);aspect-ratio:3/4;background:var(--card);}
+.about-photo{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.about-accent{position:absolute;bottom:-1.3rem;right:-1.3rem;background:var(--accent);color:var(--bg);padding:1.1rem 1.3rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.78rem;line-height:1.4;z-index:2;border-radius:3px;transform:rotate(2deg);transition:transform .4s var(--ease);}
+.about-photo-wrap:hover .about-accent{transform:rotate(0);}
+.about-text{font-size:.86rem;color:var(--muted);line-height:1.9;margin-bottom:1.3rem;}
+.about-text strong{color:var(--text);font-weight:400;}
+.about-facts{border:1px solid var(--border);margin-top:1.6rem;border-radius:3px;overflow:hidden;}
+.fact-row{display:grid;grid-template-columns:130px 1fr;border-bottom:1px solid var(--border);transition:background .2s;}
+.fact-row:last-child{border-bottom:none;}
+.fact-row:hover{background:rgba(255,255,255,.015);}
+.fact-key{padding:.85rem 1rem;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);border-right:1px solid var(--border);}
+.fact-val{padding:.85rem 1rem;font-size:.76rem;color:var(--text);}
+.fact-val a{color:var(--accent);text-decoration:none;transition:opacity .2s;}
+.fact-val a:hover{opacity:.7;}
+
+/* FAQ */
+.faq-section{background:var(--surface);}
+.faq-list{max-width:820px;margin:2.5rem auto 0;}
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-q{padding:1.5rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--light);transition:color .2s;}
+.faq-q:hover{color:var(--accent);}
+.faq-q .plus{width:22px;height:22px;position:relative;flex-shrink:0;}
+.faq-q .plus::before,.faq-q .plus::after{content:'';position:absolute;background:currentColor;}
+.faq-q .plus::before{top:50%;left:0;right:0;height:1.5px;transform:translateY(-50%);}
+.faq-q .plus::after{left:50%;top:0;bottom:0;width:1.5px;transform:translateX(-50%);transition:transform .3s var(--ease);}
+.faq-item.open .faq-q .plus::after{transform:translateX(-50%) rotate(90deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s var(--ease),padding .3s var(--ease);}
+.faq-item.open .faq-a{max-height:320px;padding-bottom:1.5rem;}
+.faq-a p{font-size:.82rem;color:var(--muted);line-height:1.85;}
+
+/* BIG CTA */
+.big-cta{padding:8rem 4rem;text-align:center;background:var(--bg);position:relative;overflow:hidden;}
+.big-cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(200,240,96,.05) 0%,transparent 70%);pointer-events:none;}
+.big-cta-inner{max-width:780px;margin:0 auto;position:relative;z-index:2;}
+.big-cta .label{font-size:.65rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:1.3rem;display:inline-block;}
+.big-cta h2{font-size:clamp(2.4rem,5vw,4.4rem);margin-bottom:1.2rem;}
+.big-cta p{color:var(--muted);font-size:.95rem;max-width:560px;margin:0 auto 2.2rem;line-height:1.8;}
+.big-cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;}
+.big-cta-subtext{font-size:.68rem;color:var(--muted-2);letter-spacing:.12em;text-transform:uppercase;}
+.big-cta-subtext span{color:var(--accent);}
+
+/* CONTACT / BOOKING */
+.contact-section{background:var(--surface);}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.contact-links{display:flex;flex-direction:column;gap:.8rem;margin-top:1.8rem;}
+.contact-link{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.3rem;background:var(--card);border:1px solid var(--border);border-radius:4px;text-decoration:none;transition:all .3s var(--ease);}
+.contact-link:hover{border-color:var(--accent);transform:translateX(4px);background:var(--card-2);}
+.cl-left{display:flex;align-items:center;gap:.9rem;}
+.cl-icon-wrap{width:36px;height:36px;border:1px solid var(--border-2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);transition:all .3s var(--ease);}
+.contact-link:hover .cl-icon-wrap{border-color:var(--accent);background:rgba(200,240,96,.06);}
+.cl-label{font-size:.78rem;color:var(--text);font-family:'Syne',sans-serif;font-weight:700;margin-bottom:.15rem;}
+.cl-sub{font-size:.62rem;color:var(--muted-2);letter-spacing:.04em;}
+.cl-arrow{color:var(--muted-2);transition:all .3s var(--ease);}
+.contact-link:hover .cl-arrow{color:var(--accent);transform:translateX(3px);}
+.form-group{margin-bottom:1.1rem;}
+.form-group label{display:block;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);margin-bottom:.45rem;}
+.form-group input,.form-group textarea{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:'DM Mono',monospace;font-size:.8rem;padding:.9rem 1rem;border-radius:3px;outline:none;transition:all .2s;resize:none;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent);background:var(--card-2);}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--muted-2);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.btn-submit{width:100%;border:none;padding:1rem;font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--bg);border-radius:999px;cursor:pointer;transition:all .3s var(--ease);display:flex;align-items:center;justify-content:center;gap:.5rem;box-shadow:0 8px 24px rgba(200,240,96,.18);}
+.btn-submit:hover{background:#d8ff72;transform:translateY(-2px);box-shadow:0 12px 32px rgba(200,240,96,.25);}
+.form-note{font-size:.65rem;color:var(--muted-2);margin-top:1rem;text-align:center;line-height:1.7;}
+.form-note span{color:var(--accent);}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:3rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;color:var(--accent);font-size:.88rem;display:flex;align-items:center;gap:.5rem;}
+.footer-text{font-size:.68rem;color:var(--muted-2);}
+.footer-status{display:inline-flex;align-items:center;gap:.5rem;font-size:.62rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;}
+.footer-status .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:livepulse 2s ease infinite;}
+
+/* STICKY MOBILE BAR */
+.sticky-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,8,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:.8rem 1rem calc(.8rem + env(safe-area-inset-bottom));z-index:90;gap:.7rem;transform:translateY(100%);transition:transform .4s var(--ease);}
+.sticky-bar.visible{transform:translateY(0);}
+.sticky-bar .btn{flex:1;justify-content:center;padding:.85rem 1rem;font-size:.68rem;}
+.sticky-bar .btn-sm{flex:0 0 auto;padding:.85rem 1rem;background:var(--card);border:1px solid var(--border);color:var(--text);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease);will-change:opacity,transform;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.08s;}
+.reveal-delay-2{transition-delay:.16s;}
+.reveal-delay-3{transition-delay:.24s;}
+.reveal-delay-4{transition-delay:.32s;}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  nav{padding:.9rem 1.2rem;}
+  nav.scrolled{padding:.7rem 1.2rem;}
+  .nav-links{display:none;}
+  .nav-burger{display:flex;}
+  .nav-logo{font-size:.85rem;}
+  .hero{grid-template-columns:1fr;padding:6rem 1.2rem 4rem;gap:3rem;min-height:auto;}
+  h1{font-size:clamp(2.2rem,8vw,3.6rem);}
+  .hero-sub{font-size:.85rem;}
+  .hero-right{order:-1;margin-bottom:.5rem;}
+  .hero-photo-wrap{max-width:100%;}
+  .hero-photo-frame{aspect-ratio:4/4;}
+  .photo-stat{top:1rem;right:1rem;min-width:auto;padding:.55rem .7rem;}
+  .stat-pill-num{font-size:1rem;}
+  .photo-badge{bottom:-.8rem;left:-.4rem;padding:.75rem .9rem;font-size:.62rem;}
+  .hero-trust{gap:1.2rem;}
+  .trust-num{font-size:1.1rem;}
+  section{padding:4rem 1.2rem;}
+  .section-intro{font-size:.82rem;}
+  .value-grid{grid-template-columns:1fr;}
+  .value-item{border-right:none;border-bottom:1px solid var(--border);padding:2rem 1.4rem;}
+  .value-item:last-child{border-bottom:none;}
+  .systems-grid{grid-template-columns:1fr;gap:1rem;}
+  .system-card{padding:1.5rem;}
+  .cta-banner{margin:3rem 1.2rem;padding:2.4rem 1.6rem;grid-template-columns:1fr;gap:1.8rem;}
+  .ventures-grid{grid-template-columns:1fr;}
+  .venture-card{padding:1.8rem 1.5rem;}
+  .numbers-grid{grid-template-columns:repeat(2,1fr);gap:1rem;}
+  .process-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .process-grid::before{display:none;}
+  .process-num{width:4.2rem;height:4.2rem;font-size:1.3rem;margin-bottom:1rem;}
+  .testi-section{padding:5rem 1.2rem;}
+  .about-grid{grid-template-columns:1fr;gap:3rem;}
+  .about-accent{display:none;}
+  .about-photo-frame{aspect-ratio:4/4;}
+  .contact-inner{grid-template-columns:1fr;gap:2.5rem;}
+  .form-row{grid-template-columns:1fr;}
+  .big-cta{padding:5rem 1.2rem;}
+  footer{flex-direction:column;text-align:center;padding:2.5rem 1.2rem;}
+  .scroll-hint{display:none;}
+  .sticky-bar{display:flex;}
+  body{padding-bottom:70px;}
+  .tl-date{font-size:.58rem;}
+}
+@media(max-width:520px){
+  .photo-stat{display:none;}
+  .photo-badge{left:.5rem;bottom:.5rem;}
+  h1 em{display:inline;}
+  .hero-actions .btn{width:100%;justify-content:center;}
+  .big-cta-actions .btn{width:100%;justify-content:center;max-width:340px;}
+  .faq-q{font-size:.88rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#home" class="nav-logo" style="font-size: 13.72px"><span class="nav-logo-dot"></span>Theodore kanjo</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#ventures">Ventures</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#proof">Proof</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="https://calendly.com/theodorekanjo/30min" target="_blank" rel="noopener" class="nav-cta">
+      <svg class="icon" viewBox="0 0 24 24" style="width:14px;height:14px;stroke-width:1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Book a call
+    </a></li>
+  </ul>
+  <div class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#work" data-i="01"><span class="idx">01</span>Work</a>
+  <a href="#ventures" data-i="02"><span class="idx">02</span>Ventures</a>
+  <a href="#process" data-i="03"><span class="idx">03</span>Process</a>
+  <a href="#experience" data-i="04"><span class="idx">04</span>Experience</a>
+  <a href="#about" data-i="05"><span class="idx">05</span>About</a>
+  <a href="#faq" data-i="06"><span class="idx">06</span>FAQ</a>
+  <a href="https://calendly.com/theodorekanjo/30min" target="_blank" rel="noopener" class="mm-cta">Book a free call →</a>
+  <div class="mm-foot"><span>●</span> Available · Yaoundé, Cameroon</div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow" id="heroGlow"></div>
+  <div class="hero-glow-2"></div>
+
+  <div class="hero-left">
+    <div class="hero-tag"><span class="dot"></span>Taking 2 new projects · Q2 2026</div>
+    <h1 id="heroHeadline">
+      <span class="word"><span>I&nbsp;build&nbsp;AI</span></span><br>
+      <span class="word"><span>systems&nbsp;that</span></span><br>
+      <span class="word"><span><em>work</em>&nbsp;for&nbsp;real</span></span><br>
+      <span class="word"><span>businesses.</span></span>
+    </h1>
+    <p class="hero-sub" id="heroSub">
+      <strong>Theodore Kanjo Ndzi</strong> — AI automation consultant, founder, and Mastercard Foundation alumni. I turn manual bottlenecks into automated systems that scale — usually inside 2–4 weeks.
+    </p>
+    <div class="hero-actions" id="heroActions">
+      <a href="https://calendly.com/theodorekanjo/30min" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01"/></svg>
+        Book a free call
+      </a>
+      <a href="#work" class="btn btn-ghost btn-lg">
+        See my work
+        <svg class="icon" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+    </div>
+    <div class="hero-trust" id="heroTrust">
+      <div class="trust-item"><div class="trust-num">11<span>K+</span></div><div class="trust-label">applicants automated</div></div>
+      <div class="trust-item"><div class="trust-num">$500<span>K</span></div><div class="trust-label">pipeline built</div></div>
+      <div class="trust-item"><div class="trust-num">10<span>%</span></div><div class="trust-label">email response rate</div></div>
+      <div class="trust-item"><div class="trust-num">5<span>yrs</span></div><div class="trust-label">across 3 continents</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right" id="heroRight">
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-frame">
+        <img class="hero-photo" id="heroPhoto" alt="Theodore Kanjo" />
+        <div class="hero-photo-overlay"></div>
+        <div class="photo-meta">
+          <span>Theodore Kanjo Ndzi · Yaoundé</span>
+          <span class="live"><span class="dot"></span>Available</span>
+        </div>
+      </div>
+      <div class="photo-badge">AI Consultant</div>
+      <div class="photo-stat">
+        <div class="stat-pill-num">10<span>%</span></div>
+        <div class="stat-pill-label">reply rate · cold email</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">n8n<span class="sep">+</span>Apollo<span class="sep">+</span>Gemini<span class="sep">+</span>Claude API<span class="sep">+</span>Google Workspace</span>
+    <span class="ticker-item">AI Automation<span class="sep">+</span>CRM Systems<span class="sep">+</span>Lead Outreach<span class="sep">+</span>Inbox Agents</span>
+    <span class="ticker-item">OneWay AI<span class="sep">+</span>ScoreWise<span class="sep">+</span>Mastercard Foundation FAST</span>
+    <span class="ticker-item">Yaoundé, Cameroon<span class="sep">+</span>Open to Remote Consulting</span>
+    <span class="ticker-item">n8n<span class="sep">+</span>Apollo<span class="sep">+</span>Gemini<span class="sep">+</span>Claude API<span class="sep">+</span>Google Workspace</span>
+    <span class="ticker-item">AI Automation<span class="sep">+</span>CRM Systems<span class="sep">+</span>Lead Outreach<span class="sep">+</span>Inbox Agents</span>
+    <span class="ticker-item">OneWay AI<span class="sep">+</span>ScoreWise<span class="sep">+</span>Mastercard Foundation FAST</span>
+    <span class="ticker-item">Yaoundé, Cameroon<span class="sep">+</span>Open to Remote Consulting</span>
+  </div>
+</div>
+
+<!-- VALUE / OUTCOMES -->
+<section class="value-section">
+  <div style="max-width:780px;">
+    <div class="section-label reveal">// what you get</div>
+    <h2 class="reveal reveal-delay-1">Not a deck. <em>A system</em><br>that runs without you.</h2>
+    <p class="section-intro reveal reveal-delay-2">Every engagement ends with a live, working automation — fully handed over, documented, and tracking real numbers in your stack.</p>
+  </div>
+  <div class="value-grid">
+    <div class="value-item reveal">
+      <div class="vi-icon">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <h3>Working automations</h3>
+      <p>n8n workflows, AI agents, and CRMs shipped live — not prototypes. Deployed on your stack or mine.</p>
+    </div>
+    <div class="value-item reveal reveal-delay-1">
+      <div class="vi-icon">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 10l-5 5-3-3-5 5"/></svg>
+      </div>
+      <h3>Measurable outcomes</h3>
+      <p>Pipeline built, hours saved, response rates moved. Numbers on a dashboard, not vibes.</p>
+    </div>
+    <div class="value-item reveal reveal-delay-2">
+      <div class="vi-icon">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>
+      </div>
+      <h3>Full handover</h3>
+      <p>Loom walkthroughs, written SOPs, and a live debrief so your team owns it the day I'm done.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-label reveal">// what I build</div>
+  <h2 class="reveal reveal-delay-1">AI systems <em>deployed</em><br>for real clients.</h2>
+  <p class="section-intro reveal reveal-delay-2">Not advice. Not decks. Working automations I've built and handed over — saving hundreds of hours and driving measurable outcomes.</p>
+  <div class="systems-grid">
+
+    <div class="system-card reveal">
+      <div class="sys-head">
+        <div class="sys-num">01 / 06</div>
+        <div class="sys-icon-wrap"><svg class="icon" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+      </div>
+      <div class="sys-title">Automated Lead Follow-Up & Qualification</div>
+      <div class="sys-desc">End-to-end outreach engine reading leads from Google Sheets, sending 150–200 personalised emails/day via Gmail, handling rate limiting, and updating row status automatically.</div>
+      <div class="sys-result"><span>Result:</span> 10% response rate vs. 2–5% industry average.</div>
+      <div class="sys-tools"><span class="tool-tag">n8n</span><span class="tool-tag">Gmail</span><span class="tool-tag">Google Sheets</span><span class="tool-tag">IONOS</span></div>
+    </div>
+
+    <div class="system-card reveal reveal-delay-1">
+      <div class="sys-head">
+        <div class="sys-num">02 / 06</div>
+        <div class="sys-icon-wrap"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+      </div>
+      <div class="sys-title">Apollo.io AI Lead Scoring System</div>
+      <div class="sys-desc">AI-powered lead prioritisation aligned to a custom ICP — surfaces only companies actively posting remote engineering roles with 10–20 employees.</div>
+      <div class="sys-result"><span>Result:</span> eliminated manual qualification entirely for the sales team.</div>
+      <div class="sys-tools"><span class="tool-tag">Apollo.io</span><span class="tool-tag">AI Prompting</span><span class="tool-tag">ICP Framework</span></div>
+    </div>
+
+    <div class="system-card reveal reveal-delay-2">
+      <div class="sys-head">
+        <div class="sys-num">03 / 06</div>
+        <div class="sys-icon-wrap"><svg class="icon" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+      </div>
+      <div class="sys-title">LinkedIn AI Content Generator Agent</div>
+      <div class="sys-desc">Custom content agent for a Talenteum team member — produces on-brand LinkedIn posts consistently without manual effort.</div>
+      <div class="sys-result"><span>Result:</span> delivered as a formal handover with full documentation.</div>
+      <div class="sys-tools"><span class="tool-tag">Claude API</span><span class="tool-tag">Custom GPT</span><span class="tool-tag">Prompt Engineering</span></div>
+    </div>
+
+    <div class="system-card reveal">
+      <div class="sys-head">
+        <div class="sys-num">04 / 06</div>
+        <div class="sys-icon-wrap"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div>
+      </div>
+      <div class="sys-title">Inbox Management AI Agent</div>
+      <div class="sys-desc">Prompt-based email agent built with Google Workspace and Gemini for two senior executives. Handles summarisation, drafts responses, and flags priority contacts.</div>
+      <div class="sys-result"><span>Result:</span> ~2 hours/day saved per executive.</div>
+      <div class="sys-tools"><span class="tool-tag">Google Workspace</span><span class="tool-tag">Gemini</span><span class="tool-tag">Gmail</span></div>
+    </div>
+
+    <div class="system-card reveal reveal-delay-1">
+      <div class="sys-head">
+        <div class="sys-num">05 / 06</div>
+        <div class="sys-icon-wrap"><svg class="icon" viewBox="0 0 24 24"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg></div>
+      </div>
+      <div class="sys-title">Enterprise Account Mapping System</div>
+      <div class="sys-desc">Sales intelligence system for Breedj enterprise outreach — maps internal power structures at target companies so reps talk to the right person, in the right order.</div>
+      <div class="sys-result"><span>Result:</span> 3x faster account entry on enterprise deals.</div>
+      <div class="sys-tools"><span class="tool-tag">DealMatching</span><span class="tool-tag">Claude</span><span class="tool-tag">Notion</span></div>
+    </div>
+
+    <div class="system-card reveal reveal-delay-2">
+      <div class="sys-head">
+        <div class="sys-num">06 / 06</div>
+        <div class="sys-icon-wrap"><svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+      </div>
+      <div class="sys-title">Cohort Induction Automation</div>
+      <div class="sys-desc">Full induction pipeline for Talenteum's MCF programme — selection, comms, onboarding — with zero manual data entry. Live CRM tracking every stage.</div>
+      <div class="sys-result"><span>Result:</span> 11,000+ applicants processed with zero manual data entry.</div>
+      <div class="sys-tools"><span class="tool-tag">n8n</span><span class="tool-tag">Apollo</span><span class="tool-tag">Google Workspace</span><span class="tool-tag">CRM</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MID CTA BANNER -->
+<div class="cta-banner reveal">
+  <div>
+    <h3>Ready to ship an <em>automation</em><br>that actually runs?</h3>
+    <p>15 minutes with me, and we'll scope the highest-leverage system your business can deploy this quarter. No pitch, no obligation.</p>
+  </div>
+  <div class="cta-banner-right">
+    <ul class="cta-mini-list" style="list-style:none;">
+      <li><span class="check">✓</span> Free 30-minute scoping call</li>
+      <li><span class="check">✓</span> Written plan in 48 hours</li>
+      <li><span class="check">✓</span> No-commitment proposal</li>
+    </ul>
+    <a href="https://calendly.com/theodorekanjo/30min" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Book on Calendly
+    </a>
+  </div>
+</div>
+
+<!-- VENTURES -->
+<section class="ventures" id="ventures">
+  <div class="section-label reveal">// companies I've built</div>
+  <h2 class="reveal reveal-delay-1">Founder. <em>Builder.</em><br>Operator.</h2>
+  <p class="section-intro reveal reveal-delay-2">Two ventures — one an AI consulting business and community, the other a fintech platform advancing financial inclusion.</p>
+  <div class="ventures-grid">
+
+    <div class="venture-card reveal">
+      <span class="venture-badge badge-founder">Founder · Jul 2025–Present</span>
+      <div class="venture-name">OneWay AI</div>
+      <div class="venture-sub">AI Agency + Skool Community · Yaoundé</div>
+      <div class="venture-desc">Helps entrepreneurs automate operations using AI. Combines a consulting agency with the OneWay AI Hub — a Skool community for founders learning to build with AI tools themselves.</div>
+      <ul class="venture-list">
+        <li><svg class="icon arrow" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>Voice AI agent for instant lead qualification on form submit</li>
+        <li><svg class="icon arrow" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>Omnichannel lead routing (capture → AI enrichment → ICP scoring → delivery)</li>
+        <li><svg class="icon arrow" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>Calendar & meeting automation via Claude conversation</li>
+        <li><svg class="icon arrow" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>Applied for Mastercard Foundation FAST Program ($5K grant milestone)</li>
+      </ul>
+    </div>
+
+    <div class="venture-card reveal reveal-delay-1">
+      <span class="venture-badge badge-cofound">Co-Founder (50%) · Sep 2025–Present</span>
+      <div class="venture-name">ScoreWise</div>
+      <div class="venture-sub">AI Fintech · CEMAC Region</div>
+      <div class="venture-desc">AI-powered credit scoring for Cameroon and CEMAC. Analyses mobile money transactions, smartphone usage, and social data to generate credit scores for unbanked individuals.</div>
+      <ul class="venture-list">
+        <li><svg class="icon arrow" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>Selected for Mastercard Foundation FAST Program</li>
+        <li><svg class="icon arrow" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>$5,000 grant upon milestone completion</li>
+        <li><svg class="icon arrow" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>Mission: empower 10,000+ unbanked individuals in year one</li>
+        <li><svg class="icon arrow" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M5 12h14M13 5l7 7-7 7"/></svg>AI-accelerated operations across the founding team</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- IMPACT NUMBERS -->
+  <div style="margin-top:5rem;">
+    <div class="section-label reveal">// by the numbers</div>
+    <h2 class="reveal reveal-delay-1">Results that <em>show up</em><br>in the data.</h2>
+    <div class="numbers-grid">
+      <div class="number-card reveal"><div class="big-num">$500<span>K</span></div><div class="num-label">Sales pipeline grown from $83K in 3 months at Xente</div></div>
+      <div class="number-card reveal reveal-delay-1"><div class="big-num">11<span>K+</span></div><div class="num-label">Applicants processed through automated cohort pipeline</div></div>
+      <div class="number-card reveal reveal-delay-2"><div class="big-num">10<span>%</span></div><div class="num-label">Email response rate vs. 2–5% industry benchmark</div></div>
+      <div class="number-card reveal reveal-delay-3"><div class="big-num">150<span>%</span></div><div class="num-label">LinkedIn engagement increase at Xente</div></div>
+      <div class="number-card reveal"><div class="big-num">200</div><div class="num-label">Personalised emails sent per day, zero manual effort</div></div>
+      <div class="number-card reveal reveal-delay-1"><div class="big-num">60</div><div class="num-label">Employers onboarded with 2,500+ lead database built</div></div>
+      <div class="number-card reveal reveal-delay-2"><div class="big-num">40<span>+</span></div><div class="num-label">Education organisations across 16 African countries at HALI</div></div>
+      <div class="number-card reveal reveal-delay-3"><div class="big-num">20<span>%</span></div><div class="num-label">Website traffic growth in 4 months at Lomar Labs</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <div class="section-label reveal">// how we work</div>
+  <h2 class="reveal reveal-delay-1">From first call to <em>live system</em><br>in three clear steps.</h2>
+  <p class="section-intro reveal reveal-delay-2">No mystery, no eternal discovery loops. Most engagements move from scoping call to shipped automation in 2–4 weeks.</p>
+
+  <div class="process-grid">
+    <div class="process-step reveal">
+      <div class="process-num">01</div>
+      <h3>Scope & map</h3>
+      <p>30-minute call to find the highest-leverage workflow. You leave with a written plan and fixed quote within 48 hours.</p>
+      <div class="ps-meta">Week 1 · Free</div>
+    </div>
+    <div class="process-step reveal reveal-delay-1">
+      <div class="process-num">02</div>
+      <h3>Build & test</h3>
+      <p>I build the automation on your stack, integrate with your tools, and run it on real data. You see progress in shared Loom updates.</p>
+      <div class="ps-meta">Week 1–3 · Fixed price</div>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <div class="process-num">03</div>
+      <h3>Ship & hand over</h3>
+      <p>Live deployment, written SOPs, Loom walkthroughs, and a debrief with your team. 30 days of post-launch support included.</p>
+      <div class="ps-meta">Week 4 · Full handover</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL + WORKFLOW SHOWCASE -->
+<section class="testi-section" id="proof">
+  <div class="testi-head">
+    <div class="section-label reveal" style="justify-content:center;">// receipts</div>
+    <h2 class="reveal reveal-delay-1">Real systems. <em>Real clients.</em><br>Live and running.</h2>
+    <p class="section-intro reveal reveal-delay-2" style="margin:1rem auto 0;">A look inside the actual n8n workflows powering outreach, induction, and inbox automation for Breedj, Talenteum and Mastercard Foundation programmes.</p>
+  </div>
+
+  <div class="wf-gallery">
+    <div class="wf-card wf-feature reveal">
+      <div class="wf-img-wrap"><img class="wf-img" src="assets/wf-2-breedj-outreach.png" alt="AI Automated Outreach workflow for Breedj"></div>
+      <div class="wf-meta">
+        <div>
+          <div class="wf-title">AI Automated Outreach</div>
+          <div class="wf-client">Breedj · 120 leads/day</div>
+        </div>
+        <div class="wf-result"><span>10%</span> reply rate</div>
+      </div>
+    </div>
+    <div class="wf-card reveal">
+      <div class="wf-img-wrap"><img class="wf-img" src="assets/wf-4-talenteum-outreach.png" alt="Talenteum Africa automated outreach workflow"></div>
+      <div class="wf-meta">
+        <div>
+          <div class="wf-title">Talenteum Africa Outreach</div>
+          <div class="wf-client">Talenteum · 25 personalised emails/day</div>
+        </div>
+        <div class="wf-result"><span>3</span> sender rotation</div>
+      </div>
+    </div>
+    <div class="wf-card reveal reveal-delay-1">
+      <div class="wf-img-wrap"><img class="wf-img" src="assets/wf-7-mcf-induction.png" alt="MCF Cohort 1 induction email campaign workflow"></div>
+      <div class="wf-meta">
+        <div>
+          <div class="wf-title">MCF Induction Campaign</div>
+          <div class="wf-client">Mastercard Foundation · Cohort 1</div>
+        </div>
+        <div class="wf-result"><span>402</span> applicants onboarded</div>
+      </div>
+    </div>
+    <div class="wf-card reveal">
+      <div class="wf-img-wrap"><img class="wf-img" src="assets/wf-3-logbook.png" alt="Internship Daily Logbook automation workflow"></div>
+      <div class="wf-meta">
+        <div>
+          <div class="wf-title">Internship Logbook System</div>
+          <div class="wf-client">Talenteum · Daily compliance</div>
+        </div>
+        <div class="wf-result"><span>0</span> manual checks</div>
+      </div>
+    </div>
+    <div class="wf-card reveal reveal-delay-1">
+      <div class="wf-img-wrap"><img class="wf-img" src="assets/wf-6-mcf-campaign.png" alt="Mastercard Foundation hourly batched email campaign"></div>
+      <div class="wf-meta">
+        <div>
+          <div class="wf-title">MCF Resilient Email Campaign</div>
+          <div class="wf-client">Mastercard Foundation · 503 leads</div>
+        </div>
+        <div class="wf-result"><span>Hourly</span> batched delivery</div>
+      </div>
+    </div>
+    <div class="wf-card reveal">
+      <div class="wf-img-wrap"><img class="wf-img" src="assets/wf-1-intern500.png" alt="Daily lead finder workflow scraping RemoteOK"></div>
+      <div class="wf-meta">
+        <div>
+          <div class="wf-title">Intern500 Daily Lead Finder</div>
+          <div class="wf-client">OneWay AI · RemoteOK scraper</div>
+        </div>
+        <div class="wf-result"><span>100</span> roles/day</div>
+      </div>
+    </div>
+    <div class="wf-card reveal reveal-delay-1">
+      <div class="wf-img-wrap"><img class="wf-img" src="assets/wf-5-logbook-reminder.png" alt="Logbook reminder workflow"></div>
+      <div class="wf-meta">
+        <div>
+          <div class="wf-title">Intern Logbook Reminder</div>
+          <div class="wf-client">Talenteum · Weekday 4PM auto</div>
+        </div>
+        <div class="wf-result"><span>5/5</span> daily reminders</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testi-card reveal" style="margin-top:5rem;">
+    <div class="testi-quote-mark">"</div>
+    <div class="testi-quote">
+      Built an outreach engine that took reply rate from <em>under 3%</em> to consistently above 10%, and it runs itself every morning.
+    </div>
+    <div class="testi-meta">
+      <div class="testi-avatar">TC</div>
+      <div>
+        <div class="ta-name">Talent Corps Team</div>
+        <div>Breedj · Talenteum</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label reveal">// experience</div>
+  <h2 class="reveal reveal-delay-1">Where I've <em>done the work.</em></h2>
+  <p class="section-intro reveal reveal-delay-2">Five years across AI consulting, growth marketing, operations, and strategy — across Africa, Europe, and remote-first teams.</p>
+  <div class="timeline-list">
+    <div class="tl-item reveal">
+      <div class="tl-top"><div class="tl-role">Talent Corps Ambassador & AI Automation Lead</div><div class="tl-date">Jan 2026 — Present</div></div>
+      <div class="tl-org">Breedj / Talenteum · Mastercard Foundation Associates Programme</div>
+      <ul class="tl-bullets">
+        <li>Built end-to-end AI outreach engine (n8n + Apollo + Gemini + Google Workspace) — 150–200 personalised emails/day</li>
+        <li>Grew employer pipeline to 60 companies; 2,500+ lead database; 10% response rate</li>
+        <li>Automated full cohort induction for 11,000+ applicants with zero manual data entry</li>
+        <li>Built live CRM tracking talent pipeline stages, employer engagement, and placement status</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-top"><div class="tl-role">Strategy Consultant</div><div class="tl-date">Jun — Nov 2025</div></div>
+      <div class="tl-org">HALI Access Network · Pan-African Higher-Ed Coalition (40+ orgs, 16 countries)</div>
+      <ul class="tl-bullets">
+        <li>Delivered 50+ page strategic roadmap and board-ready summary</li>
+        <li>Built donor database of 10+ potential funders</li>
+        <li>Repositioned HALI as a Pan-African ecosystem enabler for equitable higher education</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-top"><div class="tl-role">Marketing & Growth Specialist</div><div class="tl-date">Jan — Jun 2025</div></div>
+      <div class="tl-org">Xente · African B2B Payments Platform</div>
+      <ul class="tl-bullets">
+        <li>Grew sales pipeline from $83K to $500K in 3 months</li>
+        <li>150% LinkedIn engagement increase through data-driven social strategy</li>
+        <li>Produced the "What The Finance" Podcast — 1,000+ listens in first 4 episodes</li>
+        <li>Designed 50+ branded content assets</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-top"><div class="tl-role">Marketing Specialist</div><div class="tl-date">Jan — May 2024</div></div>
+      <div class="tl-org">Lomar Labs · London (Maritime Tech Startups)</div>
+      <ul class="tl-bullets">
+        <li>Boosted website traffic by 20% in 4 months</li>
+        <li>Managed website migration with external agencies</li>
+        <li>Business model testing and market research for early-stage startups</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-top"><div class="tl-role">Solutions Development Lead</div><div class="tl-date">Jan — Feb 2023</div></div>
+      <div class="tl-org">diiVe · Cape Town</div>
+      <ul class="tl-bullets">
+        <li>Led team developing go-to-market strategy for South African Rooibos Tea in China's $54.2B tea market</li>
+        <li>Designed 4 strategies; 80% approval from focus groups</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-top"><div class="tl-role">Scholar Council Chair</div><div class="tl-date">Feb 2019 — Nov 2023</div></div>
+      <div class="tl-org">Mastercard Foundation at ALA · 21 Partner Universities</div>
+      <ul class="tl-bullets">
+        <li>Led cross-regional collaboration across 21 MCF partner universities</li>
+        <li>Represented organisation at 2019 MCF Annual Meeting in Ghana</li>
+        <li>Built self-managing teams and communication strategies across the scholar network</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-photo-wrap reveal">
+      <div class="about-photo-frame">
+        <img class="about-photo" id="aboutPhoto" alt="Theodore Kanjo portrait" />
+      </div>
+      <div class="about-accent">Mechanical<br>Engineer turned<br>AI Consultant.</div>
+    </div>
+    <div>
+      <div class="section-label reveal">// about me</div>
+      <h2 class="reveal reveal-delay-1">The person behind<br>the <em>systems.</em></h2>
+      <p class="about-text reveal reveal-delay-2">I started as a <strong>Mechanical Engineering student</strong> at the University of Botswana — systems thinking and problem-solving are wired into how I approach everything. What changed is the tools: instead of ducts and refrigerant pipes, I now build automation workflows and AI agents.</p>
+      <p class="about-text reveal reveal-delay-2">My career has taken me from <strong>Cape Town to London to Yaoundé</strong>, working with fintech startups, Pan-African education networks, and fast-growing remote teams. The thread through all of it: I find the manual work that slows teams down and build something that handles it automatically.</p>
+      <p class="about-text reveal reveal-delay-2">I'm a <strong>Mastercard Foundation scholar and alumni</strong>, co-founder of two startups, and a consultant building one of Cameroon's first AI automation agencies.</p>
+      <div class="about-facts reveal reveal-delay-3">
+        <div class="fact-row"><div class="fact-key">Based in</div><div class="fact-val">Yaoundé, Cameroon</div></div>
+        <div class="fact-row"><div class="fact-key">Education</div><div class="fact-val">BASc Mechanical Engineering, University of Botswana</div></div>
+        <div class="fact-row"><div class="fact-key">Fellowship</div><div class="fact-val">Mastercard Foundation Scholar & Alumni</div></div>
+        <div class="fact-row"><div class="fact-key">LinkedIn</div><div class="fact-val"><a href="https://linkedin.com/in/theodorekanjo" target="_blank" rel="noopener">linkedin.com/in/theodorekanjo</a></div></div>
+        <div class="fact-row"><div class="fact-key">Languages</div><div class="fact-val">English, French</div></div>
+      </div>
+      <div style="margin-top:2rem;">
+        <a href="https://calendly.com/theodorekanjo/30min" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Book a call with me
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="section-label reveal">// questions</div>
+  <h2 class="reveal reveal-delay-1">Things you might <em>be wondering.</em></h2>
+  <p class="section-intro reveal reveal-delay-2">The real answers — price, timeline, and what it's actually like to work with me.</p>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <div class="faq-q">How much does an engagement cost?<span class="plus"></span></div>
+      <div class="faq-a"><p>Most projects are fixed-price between $1,500 and $8,000 depending on scope and integrations. I share a flat quote within 48 hours of our scoping call — no hourly surprises, no scope creep.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">How fast can you actually ship?<span class="plus"></span></div>
+      <div class="faq-a"><p>A typical automation (lead outreach, AI agent, or CRM sync) ships live in 2–4 weeks. Larger multi-system builds run 4–8 weeks. I don't take a project if I can't commit to a realistic end date.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">What tools do you build on?<span class="plus"></span></div>
+      <div class="faq-a"><p>n8n is my workhorse for workflow automation. Claude and Gemini for agentic AI. Apollo, Google Workspace, Notion, Airtable, and HubSpot for CRM and data. I adapt to your stack rather than the reverse.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Do you work with non-technical founders?<span class="plus"></span></div>
+      <div class="faq-a"><p>Most of my clients are non-technical. I translate business problems into automations and hand over Loom walkthroughs your team can follow. You don't need to know anything about APIs.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">What happens after the project ships?<span class="plus"></span></div>
+      <div class="faq-a"><p>30 days of post-launch support are included — bug fixes, tweaks, and questions over email or Loom. After that, I offer a monthly retainer for teams who want ongoing iteration, or I step away cleanly.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Do you take equity or revenue-share deals?<span class="plus"></span></div>
+      <div class="faq-a"><p>Occasionally — for early-stage African startups with a clear automation-as-moat thesis. Default is fixed-price. Let's talk on the call and see what makes sense.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG CTA -->
+<section class="big-cta" id="book">
+  <div class="big-cta-inner">
+    <span class="label">// let's build</span>
+    <h2>Stop doing work a <em>machine</em><br>could be doing for you.</h2>
+    <p>Book a free 30-minute call. I'll ask the right questions, map your highest-leverage automation, and send a written plan within 48 hours. Zero obligation.</p>
+    <div class="big-cta-actions">
+      <a href="https://calendly.com/theodorekanjo/30min" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Book on Calendly
+      </a>
+      <a href="#contact" class="btn btn-ghost btn-lg">
+        Send a message instead
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+      </a>
+    </div>
+    <div class="big-cta-subtext"><span>●</span> Currently taking 2 new projects · Next slot opens within 5 days</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-label reveal">// get in touch</div>
+      <h2 class="reveal reveal-delay-1">Or reach me <em>directly.</em></h2>
+      <p class="section-intro reveal reveal-delay-2">Not a phone-call person? Email works. LinkedIn works. The Skool community works too.</p>
+      <div class="contact-links reveal reveal-delay-3">
+        <a href="https://calendly.com/theodorekanjo/30min" target="_blank" rel="noopener" class="contact-link">
+          <div class="cl-left">
+            <div class="cl-icon-wrap"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+            <div><div class="cl-label">Book a 30-min call</div><div class="cl-sub">calendly.com/theodorekanjo/30min</div></div>
+          </div>
+          <svg class="icon cl-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/theodorekanjo" target="_blank" rel="noopener" class="contact-link">
+          <div class="cl-left">
+            <div class="cl-icon-wrap"><svg class="icon" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+            <div><div class="cl-label">LinkedIn</div><div class="cl-sub">linkedin.com/in/theodorekanjo</div></div>
+          </div>
+          <svg class="icon cl-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="mailto:hello@theodorekanjo.com" class="contact-link">
+          <div class="cl-left">
+            <div class="cl-icon-wrap"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div>
+            <div><div class="cl-label">Email</div><div class="cl-sub">hello@theodorekanjo.com</div></div>
+          </div>
+          <svg class="icon cl-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#" class="contact-link">
+          <div class="cl-left">
+            <div class="cl-icon-wrap"><svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+            <div><div class="cl-label">OneWay AI Hub</div><div class="cl-sub">Join the Skool community</div></div>
+          </div>
+          <svg class="icon cl-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <form onsubmit="event.preventDefault();handleFormSubmit(this);">
+        <div class="form-row">
+          <div class="form-group"><label>Your name</label><input required type="text" name="name" placeholder="Jane Smith"></div>
+          <div class="form-group"><label>Your email</label><input required type="email" name="email" placeholder="jane@company.com"></div>
+        </div>
+        <div class="form-group"><label>What do you need?</label><input required type="text" name="subject" placeholder="e.g. Automate our lead outreach"></div>
+        <div class="form-group"><label>More details</label><textarea rows="4" name="message" placeholder="Tell me about the problem you're solving..."></textarea></div>
+        <button class="btn-submit" type="submit">
+          Send message
+          <svg class="icon" viewBox="0 0 24 24" style="stroke:var(--bg);"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <div class="form-note">Prefer a call? <a href="https://calendly.com/theodorekanjo/30min" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">Book 30 min on Calendly <span>→</span></a></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span class="nav-logo-dot"></span>TK.NDZI</div>
+  <div class="footer-text">© 2026 Theodore Kanjo Ndzi · Yaoundé, Cameroon</div>
+  <div class="footer-status"><span class="dot"></span>Available for consulting</div>
+</footer>
+
+<!-- STICKY BOTTOM BAR (mobile) -->
+<div class="sticky-bar" id="stickyBar">
+  <a href="https://calendly.com/theodorekanjo/30min" target="_blank" rel="noopener" class="btn btn-primary">
+    <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    Book a free call
+  </a>
+  <a href="mailto:hello@theodorekanjo.com" class="btn btn-sm" aria-label="Email">
+    <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+  </a>
+</div>
+
+<script>
+/* ---------- Photos (placeholder 1x1 inline; replace with real in production) ---------- */
+/* Neutral dark placeholder since the originals were too large to preserve.
+   You should paste your real base64 photos back into #heroPhoto / #aboutPhoto srcs. */
+const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="%23222219"/><stop offset="1" stop-color="%23111110"/></linearGradient></defs><rect width="800" height="1000" fill="url(%23g)"/><g fill="none" stroke="%232a2a26" stroke-width="1"><path d="M0 200h800M0 400h800M0 600h800M0 800h800M200 0v1000M400 0v1000M600 0v1000"/></g><g transform="translate(400 500)" font-family="monospace" font-size="14" fill="%236a6a60" text-anchor="middle"><text y="-16">[ PORTRAIT ]</text><text y="10">drop photo here</text></g></svg>'
+);
+document.getElementById('heroPhoto').src = 'assets/portrait.jpeg';
+document.getElementById('aboutPhoto').src = 'assets/portrait.jpeg';
+
+/* ---------- Hero headline reveal ---------- */
+requestAnimationFrame(()=>{
+  const words = document.querySelectorAll('#heroHeadline .word span');
+  words.forEach((w,i)=>{ setTimeout(()=>w.classList.add('in'), 120 + i*110); });
+  setTimeout(()=>{
+    document.getElementById('heroSub').classList.add('in');
+    document.getElementById('heroActions').classList.add('in');
+    document.getElementById('heroTrust').classList.add('in');
+    document.getElementById('heroRight').classList.add('in');
+  }, 50);
+});
+
+/* ---------- Custom cursor ---------- */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+if (window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  let mx=0,my=0,rx=0,ry=0,running=true;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cursor.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;
+  });
+  (function animRing(){
+    rx+=(mx-rx)*.16;ry+=(my-ry)*.16;
+    ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    if(running) requestAnimationFrame(animRing);
+  })();
+  document.querySelectorAll('a,button,.system-card,.venture-card,.number-card,.faq-q,.contact-link').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
+  });
+}
+
+/* ---------- Scroll progress & nav shrink & sticky bar ---------- */
+const progressBar = document.getElementById('progressBar');
+const mainNav = document.getElementById('mainNav');
+const stickyBar = document.getElementById('stickyBar');
+let ticking = false;
+window.addEventListener('scroll',()=>{
+  if(!ticking){
+    requestAnimationFrame(()=>{
+      const s=window.scrollY;
+      const h=document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (s/h*100)+'%';
+      if(s>40) mainNav.classList.add('scrolled'); else mainNav.classList.remove('scrolled');
+      if(s>window.innerHeight*.6) stickyBar.classList.add('visible'); else stickyBar.classList.remove('visible');
+      ticking=false;
+    });
+    ticking=true;
+  }
+},{passive:true});
+
+/* ---------- Reveal on scroll ---------- */
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e)=>{
+    if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+},{threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ---------- Number count-up ---------- */
+function countUp(el,target,suffix){
+  let begin=null;const t=1400;
+  const step=ts=>{
+    if(!begin)begin=ts;
+    const prog=Math.min((ts-begin)/t,1);
+    const ease=1-Math.pow(1-prog,3);
+    el.textContent=Math.round(ease*target)+suffix;
+    if(prog<1)requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const numObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.big-num,.trust-num').forEach(el=>{
+        if(el.dataset.counted)return;
+        el.dataset.counted=true;
+        // Preserve inner <span> color for suffix
+        const raw = el.textContent.trim();
+        const match = raw.match(/^([\$£€]?)([\d,.]+)(.*)$/);
+        if(!match){return;}
+        const prefix = match[1];
+        const num = parseFloat(match[2].replace(/,/g,''));
+        const suf = match[3];
+        let start=null;const t=1400;
+        function step(ts){
+          if(!start)start=ts;
+          const p=Math.min((ts-start)/t,1);
+          const ease=1-Math.pow(1-p,3);
+          const val = Math.round(ease*num);
+          el.innerHTML = prefix + val + (suf?`<span>${suf}</span>`:'');
+          if(p<1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+      numObs.unobserve(e.target);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('.number-card, .hero-trust').forEach(el=>numObs.observe(el));
+
+/* ---------- Mobile menu ---------- */
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+function toggleMenu(){
+  burger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+}
+burger.addEventListener('click',toggleMenu);
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  if(mobileMenu.classList.contains('open')) toggleMenu();
+}));
+
+/* ---------- Parallax hero glow on mouse ---------- */
+const heroGlow = document.getElementById('heroGlow');
+document.addEventListener('mousemove',e=>{
+  if(!heroGlow)return;
+  const x=(e.clientX/window.innerWidth-.5)*40;
+  const y=(e.clientY/window.innerHeight-.5)*40;
+  heroGlow.style.transform=`translate3d(${x}px,${y}px,0)`;
+});
+
+/* ---------- Subtle parallax on hero right image + bg on scroll ---------- */
+const heroRight = document.getElementById('heroRight');
+const heroBg = document.getElementById('heroBg');
+window.addEventListener('scroll',()=>{
+  const sy = window.scrollY;
+  if(sy < window.innerHeight){
+    if(heroRight) heroRight.style.transform = `translate3d(0, ${-sy * 0.06}px, 0)`;
+    if(heroBg) heroBg.style.transform = `translate3d(0, ${sy * 0.15}px, 0) scale(1.05)`;
+  }
+},{passive:true});
+
+/* ---------- FAQ accordion ---------- */
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click',()=>{
+    item.classList.toggle('open');
+  });
+});
+
+/* ---------- Form ---------- */
+function handleFormSubmit(form){
+  const btn = form.querySelector('.btn-submit');
+  const original = btn.innerHTML;
+  btn.innerHTML = 'Sending...';
+  btn.disabled = true;
+  setTimeout(()=>{
+    btn.innerHTML = '✓ Message sent';
+    btn.style.background = '#c8f060';
+    form.reset();
+    setTimeout(()=>{
+      btn.innerHTML = original;
+      btn.disabled = false;
+    }, 2400);
+  },800);
+}
+window.handleFormSubmit = handleFormSubmit;
+
+/* ---------- Magnetic buttons ---------- */
+if (window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  document.querySelectorAll('.btn-primary').forEach(btn=>{
+    btn.addEventListener('mousemove',e=>{
+      const r = btn.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width/2) * 0.15;
+      const dy = (e.clientY - r.top - r.height/2) * 0.15;
+      btn.style.transform = `translate(${dx}px, ${dy - 2}px)`;
+    });
+    btn.addEventListener('mouseleave',()=>{
+      btn.style.transform = '';
+    });
+  });
+}
+</script>
+</body>
+</html>
